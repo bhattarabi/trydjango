@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block head_title %}Home || {{ block.super }} {% endblock head_title %}
+
+{% block content %}
+<h1>Hello!</h1>
+<p>The boolean variable is set to {{ bool_var }}.</p>
+<p>
+{% if bool_var %}
+The random number is {{ rand_num }}.
+{% endif %}
+</p>
+<p>
+{% for item in the_list %}
+{{ item }}</br>
+{% endfor %}
+</p>
+{% endblock content %}
