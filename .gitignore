@@ -1,2 +1,1 @@
-trydjango/__pycache__/*.pyc
-trydjango/settings/__pycache__/*.pyc
+master/trydjango/**/.pyc
