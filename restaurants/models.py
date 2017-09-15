@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models.signals import pre_save  
+
+from .utils import generate_unique_slug
 
 # Create your models here.
 
@@ -16,3 +19,10 @@ class RestaurantLocation(models.Model):
     @property
     def title(self):
         return self.name
+
+
+def rl_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = generate_unique_slug(instance)
+
+pre_save.connect(rl_pre_save_receiver, sender=RestaurantLocation)
