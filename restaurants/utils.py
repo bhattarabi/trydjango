@@ -5,7 +5,7 @@ import string
 
 
 def generate_random_string(size=10, 
-            chars=string.ascii.lowercase + string.digits):
+            chars=string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
 
 
