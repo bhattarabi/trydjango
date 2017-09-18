@@ -42,11 +42,4 @@ class RestaurantCreateView(CreateView):
     template_name = "restaurants/form.html"
     success_url = "/restaurants/"
 
-    #custom validation for model fields 
-    #append 'clean_' to the field name
-    def clean_name(self):
-        name = self.cleaned_data.get("name")
-        
-        if name == "name":
-            raise forms.ValidationError("'name' is an invalid name!")
-        return name
+   
