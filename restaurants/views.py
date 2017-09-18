@@ -1,8 +1,25 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 
 from .models import RestaurantLocation
+
+
+from .forms import RestaurantCreateForm, RestaurantLocationCreateForm
+
+
+def restaurant_createview(request):
+    form = RestaurantLocationCreateForm(request.POST or None)
+    
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/restaurants/")
+    
+    template_name = "restaurants/form.html"
+    context = {"form":form}
+    return render(request, template_name, context)
+
+
 
 class RestaurantListView(ListView):
     #template_name = "restaurants/restaurants_list.html"
@@ -18,10 +35,18 @@ class RestaurantListView(ListView):
     
 class RestaurantDetailView(DetailView):
     queryset = RestaurantLocation.objects.all()
-    
-    '''
-    def get_object(self, *args, **kwargs):
-        rest_id = self.kwargs.get('rest_id')
-        obj = get_object_or_404(RestaurantLocation, id=rest_id)
-        return obj
-        '''
+
+
+class RestaurantCreateView(CreateView):
+    form_class = RestaurantLocationCreateForm
+    template_name = "restaurants/form.html"
+    success_url = "/restaurants/"
+
+    #custom validation for model fields 
+    #append 'clean_' to the field name
+    def clean_name(self):
+        name = self.cleaned_data.get("name")
+        
+        if name == "name":
+            raise forms.ValidationError("'name' is an invalid name!")
+        return name
