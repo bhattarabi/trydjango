@@ -1,5 +1,2 @@
-master/trydjango/**/.pyc
-master/trydjango/db.sqlite3
-master/trydjango/**/migrations/*
-
-env_trydjango/*/**/*
+*.pyc
+env_trydjango/*
